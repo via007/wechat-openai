@@ -36,9 +36,8 @@ exports.handler = async (event, context) => {
     const response = await axios.post(
       'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions',
       {
-        model: 'qwen-omni-turbo',
-        messages: [{ role: 'user', content: Content }],
-		stream=True,
+        model: 'deepseek-v3',
+        messages: [{ role: 'user', content: Content }]
       },
       {
         headers: {
@@ -47,15 +46,7 @@ exports.handler = async (event, context) => {
         }
       }
     );
-    //const reply = response.data.choices[0].message.content;
-	let finalContent = "";
-	for await (const chunk of response) {
-		if (Array.isArray(chunk.choices) && chunk.choices.length > 0) {
-			if (chunk.choices[0].delta?.content) {
-				finalContent += chunk.choices[0].delta.content;
-			}
-		}
-	}
+    const reply = response.data.choices[0].message.content;
 
     // 构造微信 XML 回复
     const replyXml = `
@@ -64,7 +55,7 @@ exports.handler = async (event, context) => {
         <FromUserName><![CDATA[${ToUserName}]]></FromUserName>
         <CreateTime>${Math.floor(Date.now() / 1000)}</CreateTime>
         <MsgType><![CDATA[text]]></MsgType>
-        <Content><![CDATA[${finalContent}]]></Content>
+        <Content><![CDATA[${reply}]]></Content>
       </xml>
     `;
 
