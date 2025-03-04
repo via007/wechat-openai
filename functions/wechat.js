@@ -34,9 +34,9 @@ exports.handler = async (event, context) => {
 
     // 调用 OpenAI API
     const response = await axios.post(
-      'https://api.openai.com/v1/chat/completions',
+      'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions',
       {
-        model: 'gpt-3.5-turbo',
+        model: 'deepseek-v3',
         messages: [{ role: 'user', content: Content }]
       },
       {
