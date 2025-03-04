@@ -5,7 +5,7 @@ const axios = require('axios');
 const TOKEN = 'wechattest123';
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const DEFAULT_REPLY = '当前服务不稳定，请稍后再试'; // 默认回复内容
-const API_TIMEOUT = 30000; // 接口超时时间（毫秒）
+const API_TIMEOUT = 5000; // 接口超时时间（毫秒）
 
 // 生成微信回复XML的通用函数
 const buildReplyXml = (fromUser, toUser, content) => `
