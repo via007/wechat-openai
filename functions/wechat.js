@@ -34,10 +34,10 @@ exports.handler = async (event, context) => {
 
     // 调用 OpenAI API
     const response = await axios.post(
-      'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions',
+      'https://api.deepseek.com',
       {
-        model: 'deepseek-v3',
-        messages: [{ role: 'user', content: Content }]
+        model: 'deepseek-chat',
+        messages: [{ role: 'user', content: Content }, {"role": "system", "content": "你是一个快速回答的客服助手！"}]
       },
       {
         headers: {
@@ -46,7 +46,7 @@ exports.handler = async (event, context) => {
         }
       }
     );
-    const reply = response.data.choices[0].message.content;
+    const reply = response.choices[0].message.content;
 
     // 构造微信 XML 回复
     const replyXml = `
